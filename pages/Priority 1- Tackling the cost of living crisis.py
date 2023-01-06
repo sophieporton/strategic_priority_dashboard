@@ -56,22 +56,22 @@ page= st.sidebar.selectbox('Select variable',
 
 if page =='Household is not deprived in any dimension': 
  plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
- title='Number of Households')
+ title='Percentage of Households')
 
 elif page =='Household is deprived in one dimension':  
  plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in one dimension',agg='mean',
- title='Number of Households')
+ title='Percentage of Households')
 
 elif page =='Household is deprived in two dimensions': 
  plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in two dimensions',agg='mean',
- title='Number of Households')
+ title='Percentage of Households')
 
 elif page =='Household is deprived in three dimensions': 
  plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in three dimensions',agg='mean',
- title='Number of Households')
+ title='Percentage of Households')
 
 elif page== 'Household is deprived in four dimensions':
  plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in four dimensions',agg='mean',
- title='Number of Households')
+ title='Percentage of Households')
 
 
