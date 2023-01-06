@@ -9,7 +9,7 @@ import pandas as pd
 #define function to plot oas by ward
 
 def plot_wards(df, column='', string='', agg='',title=''):
-    df=df[df.MEASURES_NAME== 'Value']
+    df=df[df.MEASURES_NAME== 'Percent']
     df=df[df[column].str.contains(string)==True]
     fig = px.choropleth(df.dissolve(by='ward_name', aggfunc ={'OBS_VALUE':agg}),
                    geojson=df.dissolve(by='ward_name', aggfunc ={'OBS_VALUE':agg}).geometry,
