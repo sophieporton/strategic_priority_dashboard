@@ -48,8 +48,6 @@ except:
 deprivation_merge=merge_spatial_data(merged_wd_oa, deprivation_oa,"OA21CD", "GEOGRAPHY_CODE")
 
 # %%
-st.header('Household deprivation')
-
 with st.sidebar:
     add_radio = st.radio("Household deprivation")
 
@@ -77,5 +75,7 @@ if add_radio == "Household deprivation":
     elif deprivation_radio== 'Household is deprived in four dimensions':
      plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in four dimensions',agg='mean',
      title='Percentage of Households')
+else:
+    st.header=''
 
 
