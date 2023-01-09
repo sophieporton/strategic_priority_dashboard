@@ -49,29 +49,33 @@ deprivation_merge=merge_spatial_data(merged_wd_oa, deprivation_oa,"OA21CD", "GEO
 
 # %%
 st.header('Household deprivation')
-page= st.sidebar.selectbox('Select variable',
-  ['Household is not deprived in any dimension','Household is deprived in one dimension','Household is deprived in two dimensions',
-  'Household is deprived in three dimensions','Household is deprived in four dimensions'])
 
+with st.sidebar:
+    add_radio = st.radio("Household deprivation")
 
-if page =='Household is not deprived in any dimension': 
- plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
- title='Percentage of Households')
+if add_radio == "Household deprivation":
+    st.header('Household deprivation')
+    deprivation_radio= st.radio('Household is not deprived in any dimension','Household is deprived in one dimension','Household is deprived in two dimensions',
+  'Household is deprived in three dimensions','Household is deprived in four dimensions')
+  
+    if deprivation_radio =='Household is not deprived in any dimension': 
+     plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
+     title='Percentage of Households')
 
-elif page =='Household is deprived in one dimension':  
- plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in one dimension',agg='mean',
- title='Percentage of Households')
+    elif deprivation_radio =='Household is deprived in one dimension':  
+     plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in one dimension',agg='mean',
+     title='Percentage of Households')
 
-elif page =='Household is deprived in two dimensions': 
- plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in two dimensions',agg='mean',
- title='Percentage of Households')
+    elif deprivation_radio =='Household is deprived in two dimensions': 
+     plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in two dimensions',agg='mean',
+     title='Percentage of Households')
 
-elif page =='Household is deprived in three dimensions': 
- plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in three dimensions',agg='mean',
- title='Percentage of Households')
+    elif deprivation_radio =='Household is deprived in three dimensions': 
+     plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in three dimensions',agg='mean',
+     title='Percentage of Households')
 
-elif page== 'Household is deprived in four dimensions':
- plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in four dimensions',agg='mean',
- title='Percentage of Households')
+    elif deprivation_radio== 'Household is deprived in four dimensions':
+     plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in four dimensions',agg='mean',
+     title='Percentage of Households')
 
 
