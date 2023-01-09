@@ -49,7 +49,7 @@ deprivation_merge=merge_spatial_data(merged_wd_oa, deprivation_oa,"OA21CD", "GEO
 
 # %%
 with st.sidebar:
-    add_radio = st.radio(label='Variable selection',options=('Household deprivation'))
+    add_radio = st.radio(label='Variable selection',options=('Household deprivation','Homelessness'))
 
 if add_radio == "Household deprivation":
     st.header('Household deprivation')
