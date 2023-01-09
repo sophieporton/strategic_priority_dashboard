@@ -53,8 +53,8 @@ with st.sidebar:
 
 if add_radio == "Household deprivation":
     st.header('Household deprivation')
-    deprivation_radio= st.radio('Household is not deprived in any dimension','Household is deprived in one dimension','Household is deprived in two dimensions',
-  'Household is deprived in three dimensions','Household is deprived in four dimensions')
+    deprivation_radio= st.radio(label='Deprivation index',options=('Household is not deprived in any dimension','Household is deprived in one dimension','Household is deprived in two dimensions',
+  'Household is deprived in three dimensions','Household is deprived in four dimensions'))
   
     if deprivation_radio =='Household is not deprived in any dimension': 
      plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
