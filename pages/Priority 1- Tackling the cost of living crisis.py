@@ -51,14 +51,18 @@ deprivation_merge=merge_spatial_data(merged_wd_oa, deprivation_oa,"OA21CD", "GEO
 with st.sidebar:
     add_radio = st.radio(label='Variable selection', options=('Household deprivation','Homelessness'))
 
-if add_radio == "Household deprivation":
-    st.title('Household deprivation')
-    deprivation_radio= st.radio("Deprivation index", ('Household is not deprived in any dimension',
-    'Household is deprived in one dimension',
-    'Household is deprived in two dimensions',
-    'Household is deprived in three dimensions',
-    'Household is deprived in four dimensions'))
-  
+col1, col2= st.columns(2)
+
+with col1:
+ if add_radio == "Household deprivation":
+     st.title('Household deprivation')
+     deprivation_radio= st.radio("Deprivation index", ('Household is not deprived in any dimension',
+     'Household is deprived in one dimension',
+     'Household is deprived in two dimensions',
+     'Household is deprived in three dimensions',
+     'Household is deprived in four dimensions'))
+
+with col2: 
     if deprivation_radio =='Household is not deprived in any dimension': 
      plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
      title='Percentage of Households')
