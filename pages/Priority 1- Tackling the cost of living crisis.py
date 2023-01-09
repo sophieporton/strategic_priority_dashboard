@@ -52,7 +52,7 @@ with st.sidebar:
     add_radio = st.radio(label='Variable selection', options=('Household deprivation','Homelessness'))
 
 if add_radio == "Household deprivation":
-    st.header('Household deprivation')
+    st.title('Household deprivation')
     deprivation_radio= st.radio("Deprivation index", ('Household is not deprived in any dimension',
     'Household is deprived in one dimension',
     'Household is deprived in two dimensions',
