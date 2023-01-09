@@ -57,7 +57,7 @@ if add_radio == "Household deprivation":
     'Household is deprived in one dimension',
     'Household is deprived in two dimensions',
     'Household is deprived in three dimensions',
-    'Household is deprived in four dimensions'))
+    'Household is deprived in four dimensions'), horizontal=True)
   
     if deprivation_radio =='Household is not deprived in any dimension': 
      plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
