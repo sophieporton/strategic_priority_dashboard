@@ -157,7 +157,7 @@ if add_radio == "Household deprivation":
          plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
          title='Percentage of Households')
         with col2:
-         st.bokeh_chart(p, use_container_width=True)
+         st.bokeh_chart(p, use_container_width=False)
     
      elif deprivation_radio =='Household is deprived in one dimension':  
       plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in one dimension',agg='mean',
