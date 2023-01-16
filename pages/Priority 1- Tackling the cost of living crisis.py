@@ -4,6 +4,11 @@
 import streamlit as st 
 import plotly.express as px
 import pandas as pd
+import numpy as np
+from bokeh.plotting import figure, show, output_file
+from bokeh.models import ColumnDataSource
+from bokeh.palettes import Viridis3
+from bokeh.models import HoverTool
 
 # %%
 #define function to plot oas by ward
@@ -33,7 +38,7 @@ def merge_spatial_data(gdf, df, left_on="", right_on=""):
 # %%
 #read in aggregated oa by ward dataset from main python file 
 
-merged_wd_oa = st.session_state['merged_wd_oa']
+#merged_wd_oa = st.session_state['merged_wd_oa']
 
 # %%
 #read in deprivation by oa dataset
@@ -45,7 +50,94 @@ except:
   deprivation_oa.to_csv('lbth_census_2021_deprivation_oa.csv')
 
 #merge deprivation data with spatial data
-deprivation_merge=merge_spatial_data(merged_wd_oa, deprivation_oa,"OA21CD", "GEOGRAPHY_CODE")
+#deprivation_merge=merge_spatial_data(merged_wd_oa, deprivation_oa,"OA21CD", "GEOGRAPHY_CODE")
+
+# %%
+#read in relative deprivation 2021 dataset
+
+try:
+  deprivation_2021 = pd.read_csv('lbth_census_2021_deprivation_2021.csv')
+except:
+  deprivation_2021 = pd.read_csv('https://www.nomisweb.co.uk/api/v01/dataset/NM_2031_1.data.csv?date=latest&geography=645923010,2092957699,2013265927&c2021_dep_6=1...5&measures=20301')
+  deprivation_2021.to_csv('lbth_census_2021_deprivation_2021.csv')
+
+# %%
+#read in relative deprivation 2021 dataset
+
+try:
+ deprivation_2011 = pd.read_csv('lbth_census_2021_deprivation_2011.csv')
+except:
+ deprivation_2011 = pd.read_csv('https://www.nomisweb.co.uk/api/v01/dataset/NM_519_1.data.csv?date=latest&geography=1946157257,2092957699,2013265927&rural_urban=0&c_deprived=1...5&measures=20100')
+ deprivation_2011.to_csv('lbth_census_2021_deprivation_2011.csv')
+
+# %%
+#convert value to percent in 2011 dataset
+
+deprivation_2011['OBS_VALUE'] = (
+    np.select(
+        condlist=[deprivation_2011['GEOGRAPHY_NAME'] == 'Tower Hamlets', deprivation_2011['GEOGRAPHY_NAME'] =='England', deprivation_2011['GEOGRAPHY_NAME'] =='London'],
+        choicelist=[(deprivation_2011['OBS_VALUE']/101257)*100,(deprivation_2011['OBS_VALUE']/22063368)*100,(deprivation_2011['OBS_VALUE']/3266173)*100] 
+        ))
+
+# %%
+#rename column deprivation column to allow for concatenate
+
+deprivation_2011.rename(columns={'C_DEPRIVED_NAME': 'C2021_DEP_6_NAME'}, inplace=True)
+
+# %%
+#concatenate 2011 and 2021 dataframes 
+
+deprivation_2011_2021=pd.concat([deprivation_2011,deprivation_2021])
+
+# %%
+# Replace multiple substrings
+
+deprivation_2011_2021= deprivation_2011_2021.apply(lambda x: x.replace({'one':'1','two': '2',
+    'three': '3','four': '4'},regex=True))
+
+# %%
+#split dataframe by deprivation index
+
+any_dimension= deprivation_2011_2021[deprivation_2011_2021['C2021_DEP_6_NAME'].str.contains('any dimension',na=False)].reset_index(drop=True)
+
+one_dimension=deprivation_2011_2021[deprivation_2011_2021['C2021_DEP_6_NAME'].str.contains('1',na=False)].reset_index(drop=True)
+
+two_dimension=deprivation_2011_2021[deprivation_2011_2021['C2021_DEP_6_NAME'].str.contains('2',na=False)].reset_index(drop=True)
+
+three_dimension=deprivation_2011_2021[deprivation_2011_2021['C2021_DEP_6_NAME'].str.contains('3',na=False)].reset_index(drop=True)
+
+four_dimension=deprivation_2011_2021[deprivation_2011_2021['C2021_DEP_6_NAME'].str.contains('4',na=False)].reset_index(drop=True)
+
+
+# %%
+# create a new plot with a title and axis labels
+p = figure(title="Household is not deprived in any dimension", x_axis_label='Year', y_axis_label='Percentage')
+
+source = ColumnDataSource(any_dimension)
+
+for (name, group), color in zip(any_dimension.groupby('GEOGRAPHY_NAME'), Viridis3):
+    p.line(x=group.DATE, y=group.OBS_VALUE, legend_label=str(name), color=color,line_width=3)
+    
+p.xaxis.ticker=[2011,2021] #customise x axis tick values 
+
+p.xaxis.axis_label_text_font_size = "20pt"
+p.xaxis.major_label_text_font_size = "15pt"
+p.xaxis.axis_label_text_font = "arial"
+p.xaxis.axis_label_text_color = "black"
+
+p.yaxis.axis_label_text_font_size = "20pt"
+p.yaxis.major_label_text_font_size = "15pt"
+p.yaxis.axis_label_text_font = "arial"
+p.yaxis.axis_label_text_color = "black"
+
+p.legend.location = "bottom_right"
+p.legend.label_text_font_size = "15pt"
+p.legend.label_text_font = "arial"
+p.legend.label_text_color = "black"
+
+p.title.text_font_size = '15pt'
+
+show(p)
 
 # %%
 with st.sidebar:
@@ -53,30 +145,34 @@ with st.sidebar:
 
 if add_radio == "Household deprivation":
      st.title('Household deprivation')
-     deprivation_radio= st.radio("Deprivation index", ('Household is not deprived in any dimension',
+        deprivation_radio= st.radio("Deprivation index", ('Household is not deprived in any dimension',
      'Household is deprived in one dimension',
      'Household is deprived in two dimensions',
      'Household is deprived in three dimensions',
      'Household is deprived in four dimensions'))
 
-     if deprivation_radio =='Household is not deprived in any dimension': 
-       plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
+    if deprivation_radio =='Household is not deprived in any dimension': 
+        col1, col2=st.columns(2)
+    with col1:
+        plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
+         title='Percentage of Households')
+    with col2:
+        st.bokeh_chart(p, use_container_width=True)
+    
+    elif deprivation_radio =='Household is deprived in one dimension':  
+    plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in one dimension',agg='mean',
        title='Percentage of Households')
 
-     elif deprivation_radio =='Household is deprived in one dimension':  
-       plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in one dimension',agg='mean',
-       title='Percentage of Households')
-
-     elif deprivation_radio =='Household is deprived in two dimensions': 
-       plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in two dimensions',agg='mean',
+    elif deprivation_radio =='Household is deprived in two dimensions': 
+    plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in two dimensions',agg='mean',
        title='Percentage of Households')
 
      elif deprivation_radio =='Household is deprived in three dimensions': 
-       plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in three dimensions',agg='mean',
+        plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in three dimensions',agg='mean',
        title='Percentage of Households')
 
-     elif deprivation_radio== 'Household is deprived in four dimensions':
-       plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in four dimensions',agg='mean',
+    elif deprivation_radio== 'Household is deprived in four dimensions':
+    plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in four dimensions',agg='mean',
        title='Percentage of Households')
 
 
