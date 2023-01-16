@@ -38,7 +38,7 @@ def merge_spatial_data(gdf, df, left_on="", right_on=""):
 # %%
 #read in aggregated oa by ward dataset from main python file 
 
-#merged_wd_oa = st.session_state['merged_wd_oa']
+merged_wd_oa = st.session_state['merged_wd_oa']
 
 # %%
 #read in deprivation by oa dataset
@@ -50,7 +50,7 @@ except:
   deprivation_oa.to_csv('lbth_census_2021_deprivation_oa.csv')
 
 #merge deprivation data with spatial data
-#deprivation_merge=merge_spatial_data(merged_wd_oa, deprivation_oa,"OA21CD", "GEOGRAPHY_CODE")
+deprivation_merge=merge_spatial_data(merged_wd_oa, deprivation_oa,"OA21CD", "GEOGRAPHY_CODE")
 
 # %%
 #read in relative deprivation 2021 dataset
