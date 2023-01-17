@@ -51,6 +51,17 @@ except:
 deprivation_merge=merge_spatial_data(merged_wd_oa, deprivation_oa,"OA21CD", "GEOGRAPHY_CODE")
 
 # %%
+#read in deprivation by oa dataset
+
+try:
+  deprivation_oa_2011 = pd.read_csv('lbth_census_2011_deprivation_oa.csv')
+except:
+  deprivation_oa_2011 = pd.read_csv('https://www.nomisweb.co.uk/api/v01/dataset/NM_519_1.data.csv?date=latest&geography=1254117467...1254118025,1254259398...1254259586&rural_urban=0&c_deprived=1...5&measures=20100')
+
+#merge deprivation data with spatial data
+deprivation_merge_2011=merge_spatial_data(merged_wd_oa, deprivation_oa_2011,"OA21CD", "GEOGRAPHY_CODE")
+
+# %%
 #read in relative deprivation 2021 dataset
 
 try:
@@ -83,15 +94,15 @@ deprivation_2011['OBS_VALUE'] = (
 deprivation_2011.rename(columns={'C_DEPRIVED_NAME': 'C2021_DEP_6_NAME'}, inplace=True)
 
 # %%
+# Replace multiple substrings
+
+deprivation_2011= deprivation_2011.apply(lambda x: x.replace({'one':'1','two': '2',
+    'three': '3','four': '4'},regex=True))
+
+# %%
 #concatenate 2011 and 2021 dataframes 
 
 deprivation_2011_2021=pd.concat([deprivation_2011,deprivation_2021])
-
-# %%
-# Replace multiple substrings
-
-deprivation_2011_2021= deprivation_2011_2021.apply(lambda x: x.replace({'one':'1','two': '2',
-    'three': '3','four': '4'},regex=True))
 
 # %%
 #split dataframe by deprivation index
@@ -111,7 +122,7 @@ four_dimension=deprivation_2011_2021[deprivation_2011_2021['C2021_DEP_6_NAME'].s
 # create a new plot with a title and axis labels
 
 def trendline(df):
-    p = figure(x_axis_label='Year', y_axis_label='Percentage')
+    p = figure(title="", x_axis_label='Year', y_axis_label='Percentage')
 
     for (name, group), color in zip(any_dimension.groupby('GEOGRAPHY_NAME'), Viridis3):
         p.line(x=group.DATE, y=group.OBS_VALUE, legend_label=str(name), color=color,line_width=3)
@@ -133,6 +144,8 @@ def trendline(df):
     p.legend.label_text_font = "arial"
     p.legend.label_text_color = "black"
 
+    p.title.text_font_size = '15pt'
+
     st.bokeh_chart(p, use_container_width=True)
 
 # %%
@@ -151,6 +164,8 @@ if add_radio == "Household deprivation":
         col1, col2=st.columns(2)
         with col1:
          plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
+         title='Percentage of Households')
+         plot_wards(deprivation_merge_2011,column='C_DEPRIVED_NAME', string='Household is not deprived in any dimension',agg='mean',
          title='Percentage of Households')
         with col2:
          trendline(any_dimension)
