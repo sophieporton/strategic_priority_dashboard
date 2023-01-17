@@ -5,10 +5,9 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 import numpy as np
+import bokeh
 from bokeh.plotting import figure, show, output_file
-from bokeh.models import ColumnDataSource
 from bokeh.palettes import Viridis3
-from bokeh.models import HoverTool
 
 # %%
 #define function to plot oas by ward
@@ -112,8 +111,6 @@ four_dimension=deprivation_2011_2021[deprivation_2011_2021['C2021_DEP_6_NAME'].s
 # %%
 # create a new plot with a title and axis labels
 p = figure(title="Household is not deprived in any dimension", x_axis_label='Year', y_axis_label='Percentage')
-
-source = ColumnDataSource(any_dimension)
 
 for (name, group), color in zip(any_dimension.groupby('GEOGRAPHY_NAME'), Viridis3):
     p.line(x=group.DATE, y=group.OBS_VALUE, legend_label=str(name), color=color,line_width=3)
