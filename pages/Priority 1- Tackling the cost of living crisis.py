@@ -53,11 +53,11 @@ deprivation_merge=merge_spatial_data(merged_wd_oa, deprivation_oa,"OA21CD", "GEO
 # %%
 #read in deprivation by oa dataset
 
-try:
-  deprivation_oa_2011 = pd.read_csv('lbth_census_2011_deprivation_oa.csv')
-except:
-  deprivation_oa_2011 = pd.read_csv('https://www.nomisweb.co.uk/api/v01/dataset/NM_519_1.data.csv?date=latest&geography=1254117467...1254118025,1254259398...1254259586&rural_urban=0&c_deprived=0...5&measures=20100')
-  deprivation_oa_2011.to_csv('lbth_census_2011_deprivation_oa.csv')
+#try:
+ # deprivation_oa_2011 = pd.read_csv('lbth_census_2011_deprivation_oa.csv')
+#except:
+deprivation_oa_2011 = pd.read_csv('https://www.nomisweb.co.uk/api/v01/dataset/NM_519_1.data.csv?date=latest&geography=1254117467...1254118025,1254259398...1254259586&rural_urban=0&c_deprived=0...5&measures=20100')
+deprivation_oa_2011.to_csv('lbth_census_2011_deprivation_oa.csv')
   
 #merge deprivation data with spatial data
 deprivation_merge_2011=merge_spatial_data(merged_wd_oa, deprivation_oa_2011,"OA21CD", "GEOGRAPHY_CODE")
@@ -74,7 +74,6 @@ deprivation_merge_2011= deprivation_merge_2011.apply(lambda x: x.replace({'one':
     'three': '3','four': '4'},regex=True))
 
 # %%
-#oa_total_list= deprivation_oa_2011['C_DEPRIVED_NAME']=='All categories: Classification of household deprivation'
 
 oa_total_list= deprivation_merge_2011.loc[deprivation_merge_2011['C2021_DEP_6_NAME']=='All categories: Classification of household deprivation','OBS_VALUE'].tolist()
 
@@ -189,7 +188,7 @@ if add_radio == "Household deprivation":
      if deprivation_radio =='Household is not deprived in any dimension': 
         col1, col2=st.columns(2)
         with col1:
-         plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
+         plot_wards(deprivation_merge_2011,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
          title='Percentage of Households')
          plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
          title='Percentage of Households')
