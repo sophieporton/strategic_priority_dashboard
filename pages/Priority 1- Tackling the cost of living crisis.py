@@ -24,7 +24,7 @@ def plot_wards(df, column='', string='', agg='',title=''):
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(coloraxis_colorbar=dict(title=title))
     fig.update_traces(hovertemplate='Ward name: <b>%{location}</b> <br>Percentage: <b>%{z:.2f}%</b>')
-    st.plotly_chart(fig,use_container_width = True)
+    st.plotly_chart(fig,use_container_width = False)
 
 # %%
 #define function to merge spatial data with variable data
