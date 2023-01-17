@@ -5,7 +5,6 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 import numpy as np
-import bokeh
 from bokeh.plotting import figure, show, output_file
 from bokeh.palettes import Viridis3
 
