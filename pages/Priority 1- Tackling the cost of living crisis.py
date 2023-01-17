@@ -61,6 +61,25 @@ except:
 #merge deprivation data with spatial data
 deprivation_merge_2011=merge_spatial_data(merged_wd_oa, deprivation_oa_2011,"OA21CD", "GEOGRAPHY_CODE")
 
+deprivation_merge_2011['OBS_VALUE'] = (
+    np.select(
+        condlist=[deprivation_merge_2011['GEOGRAPHY_NAME'] == 'Tower Hamlets', deprivation_merge_2011['GEOGRAPHY_NAME'] =='England', deprivation_merge_2011['GEOGRAPHY_NAME'] =='London'],
+        choicelist=[(deprivation_merge_2011['OBS_VALUE']/101257)*100,(deprivation_merge_2011['OBS_VALUE']/22063368)*100,(deprivation_merge_2011['OBS_VALUE']/3266173)*100] 
+        ))
+
+# %%
+#rename column deprivation column to allow for concatenate
+
+deprivation_merge_2011.rename(columns={'C_DEPRIVED_NAME': 'C2021_DEP_6_NAME'}, inplace=True)
+
+# %%
+# Replace multiple substrings
+
+deprivation_2011= deprivation_merge_2011.apply(lambda x: x.replace({'one':'1','two': '2',
+    'three': '3','four': '4'},regex=True))
+
+
+
 # %%
 #read in relative deprivation 2021 dataset
 
@@ -165,7 +184,7 @@ if add_radio == "Household deprivation":
         with col1:
          plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
          title='Percentage of Households')
-         plot_wards(deprivation_merge_2011,column='C_DEPRIVED_NAME', string='Household is not deprived in any dimension',agg='mean',
+         plot_wards(deprivation_merge_2011,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
          title='Percentage of Households')
         with col2:
          trendline(any_dimension)
