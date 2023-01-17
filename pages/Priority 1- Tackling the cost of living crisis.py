@@ -24,7 +24,7 @@ def plot_wards(df, column='', string='', agg='',title=''):
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(coloraxis_colorbar=dict(title=title))
     fig.update_traces(hovertemplate='Ward name: <b>%{location}</b> <br>Percentage: <b>%{z:.2f}%</b>')
-    st.plotly_chart(fig,use_container_width = False)
+    st.plotly_chart(fig,use_container_width = True)
 
 # %%
 #define function to merge spatial data with variable data
@@ -189,7 +189,7 @@ if add_radio == "Household deprivation":
      if deprivation_radio =='Household is not deprived in any dimension': 
         col1, col2=st.columns(2)
         with col1:
-         plot_wards(deprivation_merge_2011,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
+         plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
          title='Percentage of Households')
          plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
          title='Percentage of Households')
