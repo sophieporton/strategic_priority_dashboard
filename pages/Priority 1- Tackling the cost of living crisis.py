@@ -109,31 +109,31 @@ four_dimension=deprivation_2011_2021[deprivation_2011_2021['C2021_DEP_6_NAME'].s
 
 # %%
 # create a new plot with a title and axis labels
-p = figure(title="Household is not deprived in any dimension", x_axis_label='Year', y_axis_label='Percentage')
 
-for (name, group), color in zip(any_dimension.groupby('GEOGRAPHY_NAME'), Viridis3):
-    p.line(x=group.DATE, y=group.OBS_VALUE, legend_label=str(name), color=color,line_width=3)
+def trendline(df):
+    p = figure(x_axis_label='Year', y_axis_label='Percentage')
+
+    for (name, group), color in zip(any_dimension.groupby('GEOGRAPHY_NAME'), Viridis3):
+        p.line(x=group.DATE, y=group.OBS_VALUE, legend_label=str(name), color=color,line_width=3)
     
-p.xaxis.ticker=[2011,2021] #customise x axis tick values 
+    p.xaxis.ticker=[2011,2021] #customise x axis tick values 
 
-p.xaxis.axis_label_text_font_size = "20pt"
-p.xaxis.major_label_text_font_size = "15pt"
-p.xaxis.axis_label_text_font = "arial"
-p.xaxis.axis_label_text_color = "black"
+    p.xaxis.axis_label_text_font_size = "20pt"
+    p.xaxis.major_label_text_font_size = "15pt"
+    p.xaxis.axis_label_text_font = "arial"
+    p.xaxis.axis_label_text_color = "black"
 
-p.yaxis.axis_label_text_font_size = "20pt"
-p.yaxis.major_label_text_font_size = "15pt"
-p.yaxis.axis_label_text_font = "arial"
-p.yaxis.axis_label_text_color = "black"
+    p.yaxis.axis_label_text_font_size = "20pt"
+    p.yaxis.major_label_text_font_size = "15pt"
+    p.yaxis.axis_label_text_font = "arial"
+    p.yaxis.axis_label_text_color = "black"
 
-p.legend.location = "bottom_right"
-p.legend.label_text_font_size = "15pt"
-p.legend.label_text_font = "arial"
-p.legend.label_text_color = "black"
+    p.legend.location = "bottom_right"
+    p.legend.label_text_font_size = "15pt"
+    p.legend.label_text_font = "arial"
+    p.legend.label_text_color = "black"
 
-p.title.text_font_size = '15pt'
-
-show(p)
+    st.bokeh_chart(p, use_container_width=True)
 
 # %%
 with st.sidebar:
@@ -153,7 +153,7 @@ if add_radio == "Household deprivation":
          plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
          title='Percentage of Households')
         with col2:
-         st.bokeh_chart(p, use_container_width=False)
+         trendline(any_dimension)
     
      elif deprivation_radio =='Household is deprived in one dimension':  
       plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in one dimension',agg='mean',
