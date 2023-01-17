@@ -189,10 +189,11 @@ if add_radio == "Household deprivation":
      if deprivation_radio =='Household is not deprived in any dimension': 
         col1, col2=st.columns(2)
         with col1:
-         plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
-         title='Percentage of Households')
          plot_wards(deprivation_merge_2011,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
          title='Percentage of Households')
+         plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
+         title='Percentage of Households')
+         
         with col2:
          trendline(any_dimension)
     
