@@ -119,15 +119,15 @@ deprivation_2011['OBS_VALUE'] = (
 deprivation_2011.rename(columns={'C_DEPRIVED_NAME': 'C2021_DEP_6_NAME'}, inplace=True)
 
 # %%
-# Replace multiple substrings
-
-deprivation_2011= deprivation_2011.apply(lambda x: x.replace({'one':'1','two': '2',
-    'three': '3','four': '4'},regex=True))
-
-# %%
 #concatenate 2011 and 2021 dataframes 
 
 deprivation_2011_2021=pd.concat([deprivation_2011,deprivation_2021])
+
+# %%
+# Replace multiple substrings
+
+deprivation_2011_2021= deprivation_2011_2021.apply(lambda x: x.replace({'one':'1','two': '2',
+    'three': '3','four': '4'},regex=True))
 
 # %%
 #split dataframe by deprivation index
