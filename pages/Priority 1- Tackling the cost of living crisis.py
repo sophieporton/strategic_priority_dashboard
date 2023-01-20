@@ -171,6 +171,9 @@ def trendline(df):
 
     p.title.text_font_size = '15pt'
 
+    p.plot_height=400
+    p.plot_width=400
+
     st.bokeh_chart(p, use_container_width=True)
 
 # %%
