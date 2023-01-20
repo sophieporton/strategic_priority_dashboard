@@ -149,7 +149,7 @@ four_dimension=deprivation_2011_2021[deprivation_2011_2021['C2021_DEP_6_NAME'].s
 def trendline(df):
     p = figure(title="", x_axis_label='Year', y_axis_label='Percentage')
 
-    for (name, group), color in zip(any_dimension.groupby('GEOGRAPHY_NAME'), Viridis3):
+    for (name, group), color in zip(df.groupby('GEOGRAPHY_NAME'), Viridis3):
         p.line(x=group.DATE, y=group.OBS_VALUE, legend_label=str(name), color=color,line_width=3)
     
     p.xaxis.ticker=[2011,2021] #customise x axis tick values 
