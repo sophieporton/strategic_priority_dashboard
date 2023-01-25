@@ -22,7 +22,7 @@ def plot_wards(df, agg='',title=''):
                    hover_name=df.dissolve(by='ward_name',aggfunc ={'OBS_VALUE':agg}).index )
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(coloraxis_colorbar=dict(title=title))
-    fig.update_traces(hovertemplate='Ward name: <b>%{location}</b> <br>Percentage: <b>%{z:.2f}%</b>')
+    fig.update_traces(hovertemplate='Ward name: <b>%{location}</b> <br>People per km2: <b>%{z}</b>')
     st.plotly_chart(fig,use_container_width = True)
 
 # %%
@@ -81,7 +81,7 @@ popden_2011_2021=pd.concat([popden_2011,popden_2021])
 # create a new plot with a title and axis labels
 
 def trendline(df):
-    p = figure(title="", x_axis_label='Year', y_axis_label='Percentage')
+    p = figure(title="", x_axis_label='Year', y_axis_label='People per km2')
 
     for (name, group), color in zip(df.groupby('GEOGRAPHY_NAME'), Viridis3):
         p.line(x=group.DATE, y=group.OBS_VALUE, legend_label=str(name), color=color,line_width=3)
@@ -118,7 +118,7 @@ if add_radio == "Population density":
      st.title('Population density')
      col1, col2=st.columns(2)
      with col1:
-         plot_wards(popden_merge,agg='mean',title='Percentage of Households')
+         plot_wards(popden_merge,agg='mean',title='People per km<sup>2</sup>')
      with col2:
          trendline(popden_2011_2021)
    
