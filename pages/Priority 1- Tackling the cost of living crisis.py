@@ -147,7 +147,7 @@ four_dimension=deprivation_2011_2021[deprivation_2011_2021['C2021_DEP_6_NAME'].s
 # create a new plot with a title and axis labels
 
 def trendline(df):
-    p = figure(title="", x_axis_label='Year', y_axis_label='Percentage')
+    p = figure(title="", x_axis_label='Year', y_axis_label='Percentage of households')
 
     for (name, group), color in zip(df.groupby('GEOGRAPHY_NAME'), Viridis3):
         p.line(x=group.DATE, y=group.OBS_VALUE, legend_label=str(name), color=color,line_width=3)
@@ -193,8 +193,10 @@ if add_radio == "Household deprivation":
         with col1:
          plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is not deprived in any dimension',agg='mean',
          title='Percentage of Households')
+         st.caption('A map showing the percentage of households not deprived in any dimension in Tower Hamlets by ward')
         with col2:
          trendline(any_dimension)
+         st.caption('A chart showing the percetage of houeholds not deprived in any dimension in 2011 compared to 2021, in Tower Hamlets, London, and England')
     
      elif deprivation_radio =='Household is deprived in one dimension':  
          col1, col2=st.columns(2)
