@@ -21,7 +21,7 @@ def plot_wards(df, column='', string='', agg='',title=''):
                    projection="mercator",
                    hover_name=df.dissolve(by='ward_name',aggfunc ={'OBS_VALUE':agg}).index )
     fig.update_geos(fitbounds="locations", visible=False)
-    fig.update_layout(coloraxis_colorbar=dict(title=title),height=300, width=400)
+    fig.update_layout(coloraxis_colorbar=dict(title=title),height=400, width=400)
     fig.update_traces(hovertemplate='Ward name: <b>%{location}</b> <br>Percentage: <b>%{z:.2f}%</b>')
     st.plotly_chart(fig,use_container_width = True)
 
