@@ -207,7 +207,7 @@ if add_radio == "Household deprivation":
           title='Percentage of Households')
           st.caption('Figure 1. A map showing the percentage of households deprived in one dimension in Tower Hamlets by ward')
          with col2:
-           trendline(one_dimension)
+           trendline(one_dimension,legend='top_right')
            st.caption('Figure 2. A chart showing the percetage of households deprived in one dimension in 2011 compared to 2021, in Tower Hamlets, London, and England')
 
      elif deprivation_radio =='Household is deprived in two dimensions': 
@@ -217,7 +217,7 @@ if add_radio == "Household deprivation":
           title='Percentage of Households')
           st.caption('Figure 1. A map showing the percentage of households deprived in two dimensions in Tower Hamlets by ward')
         with col2:
-         trendline(two_dimension)
+         trendline(two_dimension,legend='top_right')
          st.caption('Figure 2. A chart showing the percetage of households deprived in two dimensions in 2011 compared to 2021, in Tower Hamlets, London, and England')
 
      elif deprivation_radio =='Household is deprived in three dimensions': 
@@ -227,7 +227,7 @@ if add_radio == "Household deprivation":
           title='Percentage of Households')
           st.caption('Figure 1. A map showing the percentage of households deprived in three dimensions in Tower Hamlets by ward')
         with col2:
-          trendline(three_dimension)
+          trendline(three_dimension,legend='top_right')
           st.caption('Figure 2. A chart showing the percetage of households deprived in three dimensions in 2011 compared to 2021, in Tower Hamlets, London, and England')
 
      elif deprivation_radio== 'Household is deprived in four dimensions':
@@ -237,7 +237,7 @@ if add_radio == "Household deprivation":
          title='Percentage of Households')
          st.caption('Figure 1. A map showing the percentage of households deprived in four dimensions in Tower Hamlets by ward')
         with col2:
-         trendline(four_dimension)
+         trendline(four_dimension,legend='top_right')
          st.caption('Figure 2. A chart showing the percetage of households deprived in four dimensions in 2011 compared to 2021, in Tower Hamlets, London, and England')
 
 
