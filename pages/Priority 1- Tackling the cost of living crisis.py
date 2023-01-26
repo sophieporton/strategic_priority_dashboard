@@ -234,8 +234,8 @@ if add_radio == "Household deprivation":
         col1, col2=st.columns(2)
         with col1:
          plot_wards(deprivation_merge,column='C2021_DEP_6_NAME', string='Household is deprived in four dimensions',agg='mean',
-        title='Percentage of Households')
-        st.caption('Figure 1. A map showing the percentage of households deprived in four dimensions in Tower Hamlets by ward')
+         title='Percentage of Households')
+         st.caption('Figure 1. A map showing the percentage of households deprived in four dimensions in Tower Hamlets by ward')
         with col2:
          trendline(four_dimension)
          st.caption('Figure 2. A chart showing the percetage of households deprived in four dimensions in 2011 compared to 2021, in Tower Hamlets, London, and England')
