@@ -146,7 +146,7 @@ four_dimension=deprivation_2011_2021[deprivation_2011_2021['C2021_DEP_6_NAME'].s
 # %%
 # create a new plot with a title and axis labels
 
-def trendline(df):
+def trendline(df,legend=''):
     p = figure(title="", x_axis_label='Year', y_axis_label='Percentage of households')
 
     for (name, group), color in zip(df.groupby('GEOGRAPHY_NAME'), Viridis3):
@@ -173,6 +173,8 @@ def trendline(df):
 
     p.plot_height=400
     p.plot_width=400
+
+    p.legend.location=legend
 
     st.bokeh_chart(p, use_container_width=True)
 
@@ -207,7 +209,7 @@ if add_radio == "Household deprivation":
           title='Percentage of Households')
           st.caption('Figure 1. A map showing the percentage of households deprived in one dimension in Tower Hamlets by ward')
          with col2:
-           trendline(one_dimension)
+           trendline(one_dimension,legend='bottom_left')
            st.caption('Figure 2. A chart showing the percetage of households deprived in one dimension in 2011 compared to 2021, in Tower Hamlets, London, and England')
 
      elif deprivation_radio =='Household is deprived in two dimensions': 
