@@ -182,8 +182,9 @@ with st.sidebar:
 
 if add_radio == "Household deprivation":
      st.title('Household deprivation')
-     st.text('Whether a household is deprived in one or more ways.')
-     st.text('The dimensions of deprivation used to classify households are indicators based on four selected household characteristics- education, employment, health, and housing')
+     st.write("""Whether a household is deprived in one or more ways. \n 
+     The dimensions of deprivation used to classify households are indicators \n
+      based on four selected household characteristics- education, employment, health, and housing""")
      deprivation_radio= st.radio("Deprivation index", ('Household is not deprived in any dimension',
      'Household is deprived in one dimension',
      'Household is deprived in two dimensions',
