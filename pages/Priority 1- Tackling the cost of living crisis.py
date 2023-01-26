@@ -154,22 +154,22 @@ def trendline(df):
     
     p.xaxis.ticker=[2011,2021] #customise x axis tick values 
 
-    p.xaxis.axis_label_text_font_size = "10pt"
-    p.xaxis.major_label_text_font_size = "7pt"
+    p.xaxis.axis_label_text_font_size = "15pt"
+    p.xaxis.major_label_text_font_size = "10pt"
     p.xaxis.axis_label_text_font = "arial"
     p.xaxis.axis_label_text_color = "black"
 
-    p.yaxis.axis_label_text_font_size = "10pt"
-    p.yaxis.major_label_text_font_size = "7pt"
+    p.yaxis.axis_label_text_font_size = "15pt"
+    p.yaxis.major_label_text_font_size = "10pt"
     p.yaxis.axis_label_text_font = "arial"
     p.yaxis.axis_label_text_color = "black"
 
     p.legend.location = "bottom_right"
-    p.legend.label_text_font_size = "7pt"
+    p.legend.label_text_font_size = "10pt"
     p.legend.label_text_font = "arial"
     p.legend.label_text_color = "black"
 
-    p.title.text_font_size = '7pt'
+    p.title.text_font_size = '10pt'
 
     p.plot_height=400
     p.plot_width=400
