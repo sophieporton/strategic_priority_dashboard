@@ -122,7 +122,7 @@ if add_radio == "Population density":
          plot_wards(popden_merge,agg='mean',title='People per km<sup>2</sup>')
          st.caption('Figure 1. A map showing 2021 census data on population density in Tower Hamlets by ward')
      with col2:
-         trendline(popden_2011_2021,legend='top_left')
+         trendline(popden_2011_2021,legend='bottom_right')
          st.caption('Figure 2. A chart showing the population density in 2011 compared to 2021, in Tower Hamlets, London, and England')
    
 
