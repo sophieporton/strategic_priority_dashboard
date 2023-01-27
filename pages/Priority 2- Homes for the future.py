@@ -21,7 +21,7 @@ def plot_wards(df, agg='',title=''):
                    projection="mercator",
                    hover_name=df.dissolve(by='ward_name',aggfunc ={'OBS_VALUE':agg}).index )
     fig.update_geos(fitbounds="locations", visible=False)
-    fig.update_layout(coloraxis_colorbar=dict(title=title))
+    fig.update_layout(coloraxis_colorbar=dict(title=title),height=400, width=400)
     fig.update_traces(hovertemplate='Ward name: <b>%{location}</b> <br>People per km2: <b>%{z}</b>')
     st.plotly_chart(fig,use_container_width = True)
 
@@ -80,7 +80,7 @@ popden_2011_2021=pd.concat([popden_2011,popden_2021])
 # %%
 # create a new plot with a title and axis labels
 
-def trendline(df):
+def trendline(df,legend=''):
     p = figure(title="", x_axis_label='Year', y_axis_label='People per km2')
 
     for (name, group), color in zip(df.groupby('GEOGRAPHY_NAME'), Viridis3):
@@ -88,22 +88,22 @@ def trendline(df):
     
     p.xaxis.ticker=[2011,2021] #customise x axis tick values 
 
-    p.xaxis.axis_label_text_font_size = "20pt"
-    p.xaxis.major_label_text_font_size = "15pt"
+    p.xaxis.axis_label_text_font_size = "15pt"
+    p.xaxis.major_label_text_font_size = "10pt"
     p.xaxis.axis_label_text_font = "arial"
     p.xaxis.axis_label_text_color = "black"
 
-    p.yaxis.axis_label_text_font_size = "20pt"
-    p.yaxis.major_label_text_font_size = "15pt"
+    p.yaxis.axis_label_text_font_size = "15pt"
+    p.yaxis.major_label_text_font_size = "10pt"
     p.yaxis.axis_label_text_font = "arial"
     p.yaxis.axis_label_text_color = "black"
 
-    p.legend.location = "bottom_right"
-    p.legend.label_text_font_size = "15pt"
+    p.legend.location = legend
+    p.legend.label_text_font_size = "10pt"
     p.legend.label_text_font = "arial"
     p.legend.label_text_color = "black"
 
-    p.title.text_font_size = '15pt'
+    p.title.text_font_size = '10pt'
 
     p.plot_height=400
     p.plot_width=400
@@ -120,7 +120,7 @@ if add_radio == "Population density":
      with col1:
          plot_wards(popden_merge,agg='mean',title='People per km<sup>2</sup>')
      with col2:
-         trendline(popden_2011_2021)
+         trendline(popden_2011_2021,legend='top_left')
    
 
 
